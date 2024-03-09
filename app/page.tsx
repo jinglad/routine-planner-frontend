@@ -1,5 +1,6 @@
-import { Box } from "@mui/material";
+import { redirect } from "next/navigation";
 
-export default function Home() {
-  return <Box>Welcome</Box>;
+export default async function Home() {
+  redirect("/routine-planner");
+  return <></>;
 }

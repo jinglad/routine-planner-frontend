@@ -18,23 +18,24 @@ import {
 import Link from "next/link";
 import { MouseEvent, useState } from "react";
 import { useForm } from "react-hook-form";
-import { LoginModel } from "./login.interface";
+import { RegistrationModel } from "./login.interface";
 import { useRouter } from "next/navigation";
+import { useRegistration } from "./auth.hook";
 
 const Registration = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginModel>();
+  } = useForm<RegistrationModel>();
 
-  const onSubmit = (data: LoginModel) => {
-    setLoading(true);
-    console.log(data);
+  const { mutate: registration, isPending } = useRegistration();
+
+  const onSubmit = (data: RegistrationModel) => {
+    registration(data);
   };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -117,6 +118,27 @@ const Registration = () => {
                 }}
               >
                 <FormControl variant="outlined" fullWidth>
+                  <InputLabel htmlFor="outlined-adornment-name">
+                    Name
+                  </InputLabel>
+                  <OutlinedInput
+                    size="medium"
+                    id="outlined-adornment-name"
+                    type="text"
+                    label="Name"
+                    {...register("name", { required: "Name is required" })}
+                  />
+                </FormControl>
+                {errors?.name && (
+                  <FormHelperText error>{errors.name?.message}</FormHelperText>
+                )}
+              </Box>
+              <Box
+                sx={{
+                  mb: "1rem",
+                }}
+              >
+                <FormControl variant="outlined" fullWidth>
                   <InputLabel htmlFor="outlined-adornment-email">
                     Email
                   </InputLabel>
@@ -132,44 +154,46 @@ const Registration = () => {
                   <FormHelperText error>{errors.email?.message}</FormHelperText>
                 )}
               </Box>
-              <FormControl variant="outlined" fullWidth>
-                <InputLabel htmlFor="outlined-adornment-password">
-                  Password
-                </InputLabel>
-                <OutlinedInput
-                  size="medium"
-                  id="outlined-adornment-password"
-                  type={showPassword ? "text" : "password"}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                  label="Password"
-                  {...register("password", {
-                    required: "Password is required",
-                  })}
-                />
-              </FormControl>
-              {errors?.password && (
-                <FormHelperText error>
-                  {errors.password?.message}
-                </FormHelperText>
-              )}
+              <Box>
+                <FormControl variant="outlined" fullWidth>
+                  <InputLabel htmlFor="outlined-adornment-password">
+                    Password
+                  </InputLabel>
+                  <OutlinedInput
+                    size="medium"
+                    id="outlined-adornment-password"
+                    type={showPassword ? "text" : "password"}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label="Password"
+                    {...register("password", {
+                      required: "Password is required",
+                    })}
+                  />
+                </FormControl>
+                {errors?.password && (
+                  <FormHelperText error>
+                    {errors.password?.message}
+                  </FormHelperText>
+                )}
+              </Box>
 
               <Button
                 type="submit"
                 variant="contained"
                 color="primary"
-                startIcon={loading && <CircularProgress size={15} />}
-                disabled={loading}
+                startIcon={isPending && <CircularProgress size={15} />}
+                disabled={isPending}
                 sx={{
                   width: "100%",
                   fontWeight: 600,

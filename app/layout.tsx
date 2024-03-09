@@ -43,7 +43,7 @@ export default function RootLayout({
                   pauseOnFocusLoss
                   draggable={false}
                   pauseOnHover
-                  theme="theme"
+                  theme="light"
                 />
               </ReactQueryProvider>
             </AuthProvider>

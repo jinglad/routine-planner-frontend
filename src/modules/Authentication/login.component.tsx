@@ -51,10 +51,7 @@ const Login = () => {
           router.push("/");
         } else {
           let error: any = res?.error;
-          error = JSON.parse(error);
-          console.log(error);
-
-          toast.error(error?.Auth);
+          toast.error(error);
         }
       })
       .catch((err) => {})

@@ -26,19 +26,16 @@ const providers = [
     credentials: {},
     authorize: async (credentials: any) => {
       try {
-        const loginResponse = await AuthService.login(credentials); // Authenticate user with credentials
-
-        // console.log(loginResponse);
-
-        if (loginResponse.data.tokenInfo.accessToken) {
+        const result = await AuthService.login(credentials);
+        const loginResponse = result.data;
+        if (loginResponse.data.accessToken) {
           loginResponse.data.email = credentials.email;
           return loginResponse.data;
         }
         return null;
       } catch (e: any) {
-        const errorObject = e?.data?.error?.messages;
-        // console.log(e);
-        throw new Error(JSON.stringify(errorObject));
+        const errorObject = e?.data?.message || e?.response?.data?.message;
+        throw new Error(errorObject);
       }
     },
   }),
@@ -47,19 +44,17 @@ const providers = [
 const callbacks: Partial<CallbacksOptions> = {
   jwt: async ({ token, user }: any) => {
     if (user) {
-      const { tokenInfo, userInfo } = user;
       const {
         accessToken,
-        accessTokenExpiryTime,
+        accessTokenExpiry,
         refreshToken,
-        refreshTokenExpiryTime,
-      } = tokenInfo;
+        refreshTokenExpiry,
+      } = user;
       // This will only be executed at login. Each next invocation will skip this part.
       token.accessToken = accessToken;
-      token.accessTokenExpiry = accessTokenExpiryTime;
+      token.accessTokenExpiry = accessTokenExpiry;
       token.refreshToken = refreshToken;
-      token.refreshTokenExpiryTime = refreshTokenExpiryTime;
-      token.userInfo = userInfo;
+      token.refreshTokenExpiryTime = refreshTokenExpiry;
     }
 
     const shouldRefreshTime = Math.round(
@@ -78,8 +73,7 @@ const callbacks: Partial<CallbacksOptions> = {
     return Promise.resolve(token);
   },
   session: async ({ session, token }: any) => {
-    const { userInfo, accessToken, accessTokenExpiry } = token;
-    session.user = userInfo;
+    const { accessToken, accessTokenExpiry } = token;
     session.accessToken = accessToken;
     session.accessTokenExpiry = accessTokenExpiry;
     session.error = token.error;

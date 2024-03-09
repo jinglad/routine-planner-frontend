@@ -3,3 +3,7 @@ export interface LoginModel {
   password: string;
   tenantId?: string;
 }
+
+export interface RegistrationModel extends LoginModel {
+  name: string;
+}
