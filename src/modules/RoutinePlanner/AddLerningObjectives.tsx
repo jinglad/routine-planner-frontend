@@ -35,6 +35,7 @@ const AddLerningObjectives = () => {
         background: "white",
         p: 2,
         borderRadius: "8px",
+        maxHeight: "250px",
       }}
     >
       <Typography
@@ -67,7 +68,7 @@ const AddLerningObjectives = () => {
             <Select
               label="Priority"
               {...register("priority", { required: "Priority is required" })}
-              defaultValue={" "}
+              defaultValue={""}
             >
               <MenuItem value={1}>High</MenuItem>
               <MenuItem value={2}>Medium</MenuItem>

@@ -8,3 +8,10 @@ export interface RefreshTokenPostModel {
   accessToken: string;
   refreshToken: string;
 }
+
+export interface ICommonResponse<T> {
+  statusCode: number;
+  message: string;
+  success: boolean;
+  data: T;
+}
