@@ -22,8 +22,6 @@ const LerningObjectives = () => {
     error,
   } = useGetLearningObjectives();
 
-  console.log("learningObjectives", learningObjectives);
-
   return (
     <Box
       sx={{
@@ -46,9 +44,17 @@ const LerningObjectives = () => {
       ) : (
         <Box>
           <TableContainer
-            sx={{ border: "1px solid lightgray", borderRadius: "10px" }}
+            sx={{
+              border: "1px solid lightgray",
+              borderRadius: "10px",
+              maxHeight: "300px",
+            }}
           >
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <Table
+              sx={{ minWidth: 650 }}
+              aria-label="simple table"
+              stickyHeader
+            >
               <TableHead
                 sx={{
                   ".MuiTableCell-root": {

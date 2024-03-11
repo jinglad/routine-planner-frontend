@@ -1,11 +1,14 @@
 "use client";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import LerningObjectives from "./LerningObjectives";
 import AddLerningObjectives from "./AddLerningObjectives";
 import AcademicTimings from "./AcademicTimings";
 import AddAcademicTimings from "./AddAcademicTimings";
+import PartTimeJobInfo from "./PartTimeJobInfo";
+import { useGenerateRoutine } from "./routinePlanner.hook";
 
 const RoutinePlanner = () => {
+  const { mutate: generateRoutine, isPending } = useGenerateRoutine();
   return (
     <Box>
       <Box sx={{ mt: 3 }}>
@@ -20,6 +23,32 @@ const RoutinePlanner = () => {
           <AddAcademicTimings />
         </Box>
       </Box>
+      <Box sx={{ mt: 3 }}>
+        <Typography
+          variant="h4"
+          align="center"
+          gutterBottom
+          sx={{ fontSize: "1.5rem", fontWeight: "600" }}
+        >
+          Part Time Job Info
+        </Typography>
+        <PartTimeJobInfo />
+      </Box>
+      <Button
+        onClick={() => generateRoutine()}
+        variant="contained"
+        disabled={isPending}
+        startIcon={isPending && <CircularProgress size={15} />}
+        sx={{
+          mt: 3,
+          width: "100%",
+          py: 2,
+          fontWeight: "600",
+          fontSize: "1.5rem",
+        }}
+      >
+        Generate Routine
+      </Button>
     </Box>
   );
 };

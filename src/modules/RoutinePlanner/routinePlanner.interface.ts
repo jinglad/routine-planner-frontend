@@ -3,11 +3,13 @@ type ILearningObjective = {
   priority: number;
 };
 
-type ILearningObjectiveResponse = {
+type ILearningObjectiveResponse = ILearningObjective & {
   _id: string;
-  subject: string;
-  priority: number;
-  user: string;
+  user: {
+    _id: string;
+    name: string;
+    email: string;
+  };
   createdAt: string;
   updatedAt: string;
 };
@@ -17,4 +19,21 @@ type IAcademicTiming = {
   startTime: string;
   endTime: string;
   day: string;
+};
+
+type IAcademicTimingResponse = IAcademicTiming & {
+  _id: string;
+  user: {
+    _id: string;
+    name: string;
+    email: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+};
+
+type IPartTimeJob = {
+  hasPartTimeJob: boolean;
+  startTime: string;
+  endTime: string;
 };

@@ -1,24 +1,39 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
 import {
-  DatePicker,
-  LocalizationProvider,
-  TimePicker,
-} from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+  Box,
+  Button,
+  CircularProgress,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
+import { useAddAcademicTimings } from "./routinePlanner.hook";
+import { formatTime } from "@/src/shared/utils";
 
 const AddAcademicTimings = () => {
   const [subject, setSubject] = useState("");
-  const [date, setDate] = useState<string>();
+  const [day, setDay] = useState<string>();
   const [startTime, setStartTime] = useState<string>();
   const [endTime, setEndTime] = useState<string>();
 
+  const { mutate: addAcademicTimings, isPending } = useAddAcademicTimings({
+    reset: () => {
+      setSubject("");
+      setDay("");
+      setStartTime("");
+      setEndTime("");
+    },
+  });
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("subject", subject);
-    console.log("date", date);
-    console.log("startTime", startTime);
-    console.log("endTime", endTime);
+    // const startTimeFormatted = formatTime(startTime as string);
+    // const endTimeFormatted = formatTime(endTime as string);
+    addAcademicTimings({
+      subject,
+      day: day as string,
+      startTime: startTime as string,
+      endTime: endTime as string,
+    });
   };
 
   return (
@@ -72,9 +87,9 @@ const AddAcademicTimings = () => {
             sx={{ my: 2, backgroundColor: "white" }}
             type="date"
             InputLabelProps={{ shrink: true }}
-            value={date}
+            value={day}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setDate(e.target.value)
+              setDay(e.target.value)
             }
             required
           />
@@ -103,9 +118,10 @@ const AddAcademicTimings = () => {
               }}
               sx={{ my: 2, backgroundColor: "white" }}
               value={startTime}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setStartTime(e.target.value)
-              }
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setStartTime(e.target.value);
+                // set AM or PM
+              }}
               required
             />
           </Box>
@@ -136,8 +152,8 @@ const AddAcademicTimings = () => {
           color="primary"
           fullWidth
           sx={{ mt: 2 }}
-          // startIcon={isPending && <CircularProgress size={15} />}
-          // disabled={isPending}
+          startIcon={isPending && <CircularProgress size={15} />}
+          disabled={isPending}
         >
           Add
         </Button>

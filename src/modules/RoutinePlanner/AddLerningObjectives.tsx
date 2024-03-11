@@ -70,9 +70,9 @@ const AddLerningObjectives = () => {
               {...register("priority", { required: "Priority is required" })}
               defaultValue={""}
             >
-              <MenuItem value={1}>High</MenuItem>
+              <MenuItem value={3}>High</MenuItem>
               <MenuItem value={2}>Medium</MenuItem>
-              <MenuItem value={3}>Low</MenuItem>
+              <MenuItem value={1}>Low</MenuItem>
             </Select>
           </FormControl>
           {errors.priority && (
