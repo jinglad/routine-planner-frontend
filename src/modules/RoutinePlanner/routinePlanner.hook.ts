@@ -4,6 +4,7 @@ import { signOut, useSession } from "next-auth/react";
 import { ICommonResponse } from "@/src/shared/interface";
 import { RoutinePlannerService } from "./routinePlanner.service";
 import { QueryKeys } from "@/src/shared/enum";
+import { Dispatch, SetStateAction } from "react";
 
 export const useAddLearningObjective = () => {
   const queryClient = useQueryClient();
@@ -84,11 +85,19 @@ export const useGetPartTimeJobInfo = () => {
   });
 };
 
-export const useGenerateRoutine = () => {
-  return useMutation({
+export const useGenerateRoutine = ({
+  setOpenRoutine,
+  setRoutine,
+}: {
+  setOpenRoutine: Dispatch<SetStateAction<boolean>>;
+  setRoutine: Dispatch<SetStateAction<ICommonResponse<IRoutine> | undefined>>;
+}) => {
+  return useMutation<ICommonResponse<IRoutine>>({
     mutationFn: async () => await RoutinePlannerService.generateRoutine(),
-    onSuccess: () => {
+    onSuccess: (data) => {
       toast.success("Routine generated successfully");
+      setOpenRoutine(true);
+      setRoutine(data);
     },
     onError: (error: any) => {
       toast.error(error?.response?.data?.message || "Something went wrong");

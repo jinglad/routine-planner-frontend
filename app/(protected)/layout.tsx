@@ -1,14 +1,20 @@
+"use client";
+
 import Header from "@/src/components/Header";
 import { Box, Container } from "@mui/material";
-import { getServerSession } from "next-auth";
+import { getSession, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 
-const ProtectedLayout = async ({ children }: { children: ReactNode }) => {
-  const session = await getServerSession();
-  if (!session) {
-    redirect("/login");
-  }
+const ProtectedLayout = ({ children }: { children: ReactNode }) => {
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    if (!session) {
+      redirect("/login");
+    }
+  }, [session]);
+
   return (
     <>
       <Header />

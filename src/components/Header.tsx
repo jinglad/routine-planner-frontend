@@ -17,7 +17,7 @@ import { MouseEvent, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { signOut, useSession } from "next-auth/react";
 
-const pages = ["Routine"];
+const pages = [""];
 const settings = ["Logout"];
 
 const Header = () => {

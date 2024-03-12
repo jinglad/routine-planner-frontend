@@ -51,7 +51,7 @@ const getPartTimeJobInfo = async (): Promise<ICommonResponse<IPartTimeJob>> => {
   return result.data;
 };
 
-const generateRoutine = async () => {
+const generateRoutine = async (): Promise<ICommonResponse<IRoutine>> => {
   const axiosInstance = await axiosInstanceWithAuth();
   const result = await axiosInstance.post("/api/v1/routine-generation");
   return result.data;

@@ -37,3 +37,19 @@ type IPartTimeJob = {
   startTime: string;
   endTime: string;
 };
+
+type IRoutine = {
+  date: string;
+  learningObjectives: {
+    item: ILearningObjectiveResponse;
+    sessionDuration: number;
+  }[];
+  academicTimings: {
+    item: IAcademicTimingResponse;
+    sessionDuration: number;
+  }[];
+  partTimeJobInfo: {
+    item: IPartTimeJob;
+    sessionDuration: number;
+  };
+}[];
