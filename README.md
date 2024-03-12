@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Routine Maker
 
-## Getting Started
+## Project Objectives
 
-First, run the development server:
+The objective of the frontend part of the project is to provide an intuitive and user-friendly interface for the Routine Planner Feature. This feature aims to assist students in generating personalized study schedules based on their preferences and constraints.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Architecture Overview
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The frontend architecture is structured around Next.js, utilizing React components and various third-party libraries. Key components include:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **LearningObjectives**: Component for displaying and inputting learning objectives.
+- **AcademicTimings**: Component for managing academic timings.
+- **PartTimeJobInfo**: Component to handle part-time job information.
+- **Generate Routine Button**: A button triggering the routine generation process.
+- **Routine Modal**: Modal to display the generated routine based on user preferences.
+- **NextAuth.js**: Used for authentication and managing user sessions.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Key Libraries Used
 
-## Learn More
+- **@mui/material**: Material-UI components for a consistent and modern UI.
+- **@tanstack/react-query**: React Query for efficient data fetching.
+- **react-hook-form**: Form library for handling form state and validation.
+- **axios**: HTTP client for making API requests.
+- **react-toastify**: Toast notifications for user feedback.
+- **next-auth**: NextAuth.js for authentication and session management.
 
-To learn more about Next.js, take a look at the following resources:
+To use the Routine Planner Feature on the frontend, follow these steps:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Getting Started
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+1. **Prerequisites**: Ensure you have Node.js installed on your machine.
+2. **Installation**: Run `npm install` to install the project dependencies.
 
-## Deploy on Vercel
+### Running the Application
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Run `npm run dev` to start the development server.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Components
+
+1. **LearningObjectives Component**: Use this component to view and add learning objectives.
+2. **AcademicTimings Component**: Manage academic timings with this component.
+3. **PartTimeJobInfo Component**: Input information related to part-time jobs.
+4. **Generate Routine Button**: Click this button to initiate the routine generation process.
+5. **Routine Modal**: The modal displays the generated routine based on user preferences.
+
+### Authentication
+
+- NextAuth.js is integrated for authentication. Ensure the backend includes the necessary authentication routes.
+- Adjust NextAuth.js configuration in `pages/api/auth/[...nextauth].js` as needed.
