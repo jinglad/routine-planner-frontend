@@ -45,5 +45,5 @@ To use the Routine Planner Feature on the frontend, follow these steps:
 
 ### Authentication
 
-- NextAuth.js is integrated for authentication. Ensure the backend includes the necessary authentication routes.
+- NextAuth.js is integrated for authentication.
 - Adjust NextAuth.js configuration in `pages/api/auth/[...nextauth].js` as needed.
